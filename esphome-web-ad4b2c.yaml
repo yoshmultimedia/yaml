@@ -1,0 +1,31 @@
+esphome:
+  name: esphome-web-ad4b2c
+  friendly_name: ESP32
+
+esp32:
+  board: esp32dev
+  framework:
+    type: arduino
+
+# Enable logging
+logger:
+
+# Enable Home Assistant API
+api:
+  encryption:
+    key: "j5oqb0HWke+0iaBWN8lZLWIsAZXQCFiXBnTrC5ryCkQ="
+
+ota:
+
+
+wifi:
+  ssid: !secret wifi_ssid
+  password: !secret wifi_password
+
+  # Enable fallback hotspot (captive portal) in case wifi connection fails
+  ap:
+    ssid: "ESP32s"
+    password: ""
+
+captive_portal:
+    

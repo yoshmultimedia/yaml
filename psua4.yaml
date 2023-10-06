@@ -1,0 +1,357 @@
+esphome:
+  name: psua4
+  friendly_name: psua4
+  build_path: .esphome/build/psua4
+  platformio_options: {}
+  includes: []
+  libraries: []
+  name_add_mac_suffix: false
+  min_version: 2023.8.2
+esp8266:
+  board: esp12e
+  framework:
+    version: 3.0.2
+    source: ~3.30002.0
+    platform_version: platformio/espressif8266@3.2.0
+  restore_from_flash: false
+  early_pin_init: true
+  board_flash_mode: dout
+logger:
+  level: ERROR
+api:
+  encryption:
+    key: o5mgTW3fhrG3f6RCbE15S9jrSRkwD2lVJmZ3lrvmhQU=
+  port: 6053
+  password: ''
+  reboot_timeout: 15min
+ota:
+  password: 39a25497b61eeb68b8d9ddb91c3c894b
+  safe_mode: true
+  port: 8266
+  reboot_timeout: 5min
+  num_attempts: 10
+wifi:
+  ap:
+    ssid: Yosh Muhaimin Psua4
+    password: muhaimin
+    ap_timeout: 1min
+  domain: .local
+  reboot_timeout: 15min
+  power_save_mode: NONE
+  fast_connect: false
+  output_power: 20.0
+  passive_scan: false
+  enable_on_boot: true
+  networks:
+  - ssid: FREE WIFI
+    password: wifinerusak
+    priority: 0.0
+  use_address: psua4.local
+captive_portal: {}
+i2c:
+- sda: 4
+  scl: 5
+  scan: true
+  id: bus_a
+  frequency: 50000.0
+sensor:
+- platform: ina3221
+  address: 0x40
+  channel_1:
+    shunt_resistance: 0.1
+    current:
+      id: usb1a
+      name: USB1 Ampere
+      disabled_by_default: false
+      force_update: true
+      unit_of_measurement: A
+      accuracy_decimals: 2
+      device_class: current
+      state_class: measurement
+    power:
+      id: usb1power
+      name: USB1 Power
+      disabled_by_default: false
+      force_update: false
+      unit_of_measurement: W
+      accuracy_decimals: 2
+      device_class: power
+      state_class: measurement
+    bus_voltage:
+      id: usb1volt
+      name: USB1 Volt
+      disabled_by_default: false
+      force_update: true
+      unit_of_measurement: V
+      accuracy_decimals: 2
+      device_class: voltage
+      state_class: measurement
+  channel_2:
+    shunt_resistance: 0.1
+    current:
+      id: usb2a
+      name: USB2 A
+      disabled_by_default: false
+      force_update: true
+      unit_of_measurement: A
+      accuracy_decimals: 2
+      device_class: current
+      state_class: measurement
+    power:
+      id: usb2power
+      name: USB2 Power
+      disabled_by_default: false
+      force_update: false
+      unit_of_measurement: W
+      accuracy_decimals: 2
+      device_class: power
+      state_class: measurement
+    bus_voltage:
+      id: usb2volt
+      name: USB2 Volt
+      disabled_by_default: false
+      force_update: true
+      unit_of_measurement: V
+      accuracy_decimals: 2
+      device_class: voltage
+      state_class: measurement
+  channel_3:
+    shunt_resistance: 0.1
+    current:
+      id: psua
+      name: PSU A
+      disabled_by_default: false
+      force_update: true
+      unit_of_measurement: A
+      accuracy_decimals: 2
+      device_class: current
+      state_class: measurement
+    power:
+      id: psupower
+      name: PSU Power
+      disabled_by_default: false
+      force_update: false
+      unit_of_measurement: W
+      accuracy_decimals: 2
+      device_class: power
+      state_class: measurement
+    bus_voltage:
+      id: psuvolt
+      name: PSU Volt
+      disabled_by_default: false
+      force_update: true
+      unit_of_measurement: V
+      accuracy_decimals: 2
+      device_class: voltage
+      state_class: measurement
+  update_interval: 1ms
+spi:
+- clk_pin:
+    number: 12
+    mode:
+      output: true
+      analog: false
+      input: false
+      open_drain: false
+      pullup: false
+      pulldown: false
+    inverted: false
+  mosi_pin:
+    number: 14
+    mode:
+      output: true
+      analog: false
+      input: false
+      open_drain: false
+      pullup: false
+      pulldown: false
+    inverted: false
+  force_sw: false
+display:
+- platform: st7920
+  rotation: 180
+  width: 128
+  height: 64
+  cs_pin:
+    number: 16
+    inverted: true
+    mode:
+      output: true
+      analog: false
+      input: false
+      open_drain: false
+      pullup: false
+      pulldown: false
+  lambda: !lambda |2-
+    it.line(0, 0, 127, 0);
+    it.line(0, 11, 98, 11);
+    it.line(99, 10, 126, 10);
+    it.line(99, 32, 126, 32);
+    it.line(99, 42, 126, 42);
+    it.line(0, 63, 127, 63);
+
+    it.line(0, 64, 0, 0);
+    it.line(127, 64, 127, 0);
+    it.line(98, 64, 98, 0);
+
+    it.print(2, 2, id(dot8x8), "PSUA SADEWO");
+    it.printf(2, 45, id(dot), "PSU");
+    it.printf(2, 55, id(dot), " -A-");
+    
+    
+    it.printf(84, 14, id(fusb1volt), "A");
+    it.printf(2, 11, id(fusb1a), "%.3f", id(usb1a).state);
+
+    it.printf(84, 40, id(fusb1volt), "A");
+    it.printf(30, 40, id(fusb1volt),"%.2f", id(psua).state);
+    
+    it.printf(102, 2, id(dot), "USB");
+    it.printf(99, 10, id(seven), "%.2fV", id(usb2volt).state);
+    it.printf(99, 20, id(seven), "%.2fA", id(usb2a).state);
+
+    it.printf(102, 34, id(dot), "PSV");
+    it.printf(99, 42, id(seven), "%.2fV", id(usb1volt).state);
+    it.printf(99, 52, id(seven), "%.2fV", id(psuvolt).state);
+  auto_clear_enabled: true
+  update_interval: 1ms
+font:
+- file:
+    path: fonts/Lightdot-8x8.ttf
+    type: local
+  id: dot
+  size: 7
+- file:
+    path: fonts/Lightdot-8x8.ttf
+    type: local
+  id: dot8x8
+  size: 8
+- file:
+    path: fonts/sevensegmen.ttf
+    type: local
+  id: seven
+  size: 12
+- file:
+    path: fonts/SevenSegment.ttf
+    type: local
+  id: sevens
+  size: 12
+- file:
+    path: fonts/psua.ttf
+    type: local
+  id: powers
+  size: 20
+- file:
+    path: fonts/usbfontbig.ttf
+    type: local
+  id: fusb1a
+  size: 33
+- file:
+    path: fonts/usbfontbig.ttf
+    type: local
+  id: fusb1volt
+  size: 25
+
+output:
+- platform: esp8266_pwm
+  pin:
+    number: 13
+    inverted: true
+  frequency: 1000.0
+  id: ledlcd
+light:
+  - platform: monochromatic
+    output: ledlcd
+    name: "lcd backlight"
+  - platform: neopixelbus
+    type: BGR
+    variant: WS2811
+    pin: GPIO0
+    num_leds: 4
+    name: "NeoPixel Light"
+    effects:
+      - strobe:
+          name: Strobe Effect With Custom Values
+          colors:
+            - state: true
+              brightness: 100%
+              red: 100%
+              green: 90%
+              blue: 0%
+              duration: 500ms
+            - state: false
+              duration: 250ms
+            - state: true
+              brightness: 100%
+              red: 0%
+              green: 100%
+              blue: 0%
+              duration: 500ms   
+      - random:
+          name: "My Slow Random Effect"
+          transition_length: 30s
+          update_interval: 30s
+      - random:
+          name: "My Fast Random Effect"
+          transition_length: 4s
+          update_interval: 5s 
+      - random:
+          name: Random Effect With Custom Values
+          transition_length: 5s
+          update_interval: 7s
+      - pulse:
+          name: "Fast Pulse"
+          transition_length: 0.5s
+          update_interval: 0.5s
+          min_brightness: 0%
+          max_brightness: 100%
+      - pulse:
+          name: "Slow Pulse"
+          # transition_length: 1s      # defaults to 1s
+          update_interval: 2s
+      - flicker:
+          name: Flicker Effect With Custom Values
+          alpha: 95%
+          intensity: 1.5%
+      - addressable_rainbow:
+          name: Rainbow Effect With Custom Values
+          speed: 10
+          width: 50
+      - addressable_color_wipe:
+          name: Color Wipe Effect With Custom Values
+          colors:
+            - red: 100%
+              green: 100%
+              blue: 100%
+              num_leds: 1
+            - red: 0%
+              green: 0%
+              blue: 0%
+              num_leds: 1
+          add_led_interval: 100ms
+          reverse: false
+      - addressable_scan:
+          name: Scan Effect With Custom Values
+          move_interval: 100ms
+          scan_width: 1
+      - addressable_twinkle:
+          name: Twinkle Effect With Custom Values
+          twinkle_probability: 5%
+          progress_interval: 4ms
+      - addressable_random_twinkle:
+          name: Random Twinkle Effect With Custom Values
+          twinkle_probability: 5%
+          progress_interval: 32ms
+      - addressable_fireworks:
+          name: Fireworks Effect With Custom Values
+          update_interval: 32ms
+          spark_probability: 10%
+          use_random_color: false
+          fade_out_rate: 120
+    restore_mode: ALWAYS_ON
+    gamma_correct: 2.8
+    default_transition_length: 1s
+    flash_transition_length: 0s
+    invert: false
+    method:
+      type: bit_bang
+    

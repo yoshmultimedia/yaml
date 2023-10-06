@@ -1,0 +1,442 @@
+esphome:
+  name: yosh
+  friendly_name: YOSH
+  build_path: .esphome/build/yosh
+  platformio_options: {}
+  includes: []
+  libraries: []
+  name_add_mac_suffix: false
+  min_version: 2023.8.2
+esp8266:
+  board: esp12e
+  framework:
+    version: 3.0.2
+    source: ~3.30002.0
+    platform_version: platformio/espressif8266@3.2.0
+  restore_from_flash: false
+  early_pin_init: true
+  board_flash_mode: dout
+logger:
+  baud_rate: 115200
+  tx_buffer_size: 512
+  deassert_rts_dtr: false
+  hardware_uart: UART0
+  level: INFO
+  logs: {}
+  esp8266_store_log_strings_in_flash: false
+api:
+  encryption:
+    key: QG0uteUKK07u7Ycw/Y8G8aTiAe+ZlxH9L0Fzw+IY8w0=
+  port: 6053
+  password: ''
+  reboot_timeout: 15min
+ota:
+  password: e5720e46cedff65033b82fdcb73d662d
+  safe_mode: true
+  port: 8266
+  reboot_timeout: 5min
+  num_attempts: 10
+wifi:
+  ap:
+    ssid: Yosh Muhaimin
+    password: muhaimin
+    ap_timeout: 1min
+  domain: .local
+  reboot_timeout: 15min
+  power_save_mode: NONE
+  fast_connect: true
+  output_power: 20.0
+  passive_scan: true
+  enable_on_boot: true
+  networks:
+  - ssid: FREE WIFI
+    password: wifinerusak
+    priority: 0.0
+  use_address: yosh.local
+web_server:
+  port: 80
+  local: true
+  version: 2
+  include_internal: false
+  ota: true
+  log: true
+  css_url: ''
+  js_url: https://oi.esphome.io/v2/www.js
+captive_portal: {}
+i2c:
+- sda: 4
+  scl: 5
+  scan: true
+  id: bus_a
+  frequency: 50000.0
+sensor:
+- platform: ina3221
+  address: 0x40
+  channel_1:
+    shunt_resistance: 0.1
+    current:
+      id: diaga
+      name: diag
+      disabled_by_default: false
+      force_update: true
+      unit_of_measurement: A
+      accuracy_decimals: 3
+      device_class: current
+      state_class: measurement
+    power:
+      id: diagw
+      name: diagw
+      disabled_by_default: false
+      force_update: false
+      unit_of_measurement: W
+      accuracy_decimals: 3
+      device_class: power
+      state_class: measurement
+    bus_voltage:
+      id: diagv
+      name: diagv
+      disabled_by_default: false
+      force_update: true
+      unit_of_measurement: V
+      accuracy_decimals: 3
+      device_class: voltage
+      state_class: measurement
+  channel_2:
+    shunt_resistance: 0.1
+    current:
+      id: usb3a
+      name: usb3a
+      disabled_by_default: false
+      force_update: true
+      unit_of_measurement: A
+      accuracy_decimals: 3
+      device_class: current
+      state_class: measurement
+    power:
+      id: usb3w
+      name: usb3w
+      disabled_by_default: false
+      force_update: false
+      unit_of_measurement: W
+      accuracy_decimals: 3
+      device_class: power
+      state_class: measurement
+    bus_voltage:
+      id: usb3v
+      name: usb3v
+      disabled_by_default: false
+      force_update: true
+      unit_of_measurement: V
+      accuracy_decimals: 3
+      device_class: voltage
+      state_class: measurement
+  channel_3:
+    shunt_resistance: 0.1
+    current:
+      id: usb4a
+      name: usb4a
+      disabled_by_default: false
+      force_update: true
+      unit_of_measurement: A
+      accuracy_decimals: 3
+      device_class: current
+      state_class: measurement
+    power:
+      id: usb4w
+      name: usb4w
+      disabled_by_default: false
+      force_update: false
+      unit_of_measurement: W
+      accuracy_decimals: 3
+      device_class: power
+      state_class: measurement
+    bus_voltage:
+      id: usb4v
+      name: usb4v
+      disabled_by_default: false
+      force_update: true
+      unit_of_measurement: V
+      accuracy_decimals: 3
+      device_class: voltage
+      state_class: measurement
+  update_interval: 1ms
+- platform: ina3221
+  address: 0x42
+  channel_1:
+    shunt_resistance: 0.1
+    current:
+      id: stepdowna
+      name: stepdowna
+      disabled_by_default: false
+      force_update: true
+      unit_of_measurement: A
+      accuracy_decimals: 3
+      device_class: current
+      state_class: measurement
+    power:
+      id: stepdownw
+      name: stepdownw
+      disabled_by_default: false
+      force_update: false
+      unit_of_measurement: W
+      accuracy_decimals: 3
+      device_class: power
+      state_class: measurement
+    bus_voltage:
+      id: stepdownv
+      name: stepdownv
+      disabled_by_default: false
+      force_update: true
+      unit_of_measurement: V
+      accuracy_decimals: 3
+      device_class: voltage
+      state_class: measurement
+  channel_2:
+    shunt_resistance: 0.1
+    current:
+      id: usb1a
+      name: usb1a
+      disabled_by_default: false
+      force_update: true
+      unit_of_measurement: A
+      accuracy_decimals: 3
+      device_class: current
+      state_class: measurement
+    power:
+      id: usb1w
+      name: usb1w
+      disabled_by_default: false
+      force_update: false
+      unit_of_measurement: W
+      accuracy_decimals: 3
+      device_class: power
+      state_class: measurement
+    bus_voltage:
+      id: usb1v
+      name: usb1v
+      disabled_by_default: false
+      force_update: true
+      unit_of_measurement: V
+      accuracy_decimals: 3
+      device_class: voltage
+      state_class: measurement
+  channel_3:
+    shunt_resistance: 0.1
+    current:
+      id: usb2a
+      name: usb2a
+      disabled_by_default: false
+      force_update: true
+      unit_of_measurement: A
+      accuracy_decimals: 3
+      device_class: current
+      state_class: measurement
+    power:
+      id: usb2w
+      name: usb2w
+      disabled_by_default: false
+      force_update: false
+      unit_of_measurement: W
+      accuracy_decimals: 2
+      device_class: power
+      state_class: measurement
+    bus_voltage:
+      id: usb2v
+      name: usb2v
+      disabled_by_default: false
+      force_update: true
+      unit_of_measurement: V
+      accuracy_decimals: 3
+      device_class: voltage
+      state_class: measurement
+  update_interval: 1ms
+
+spi:
+- clk_pin:
+    number: 12
+    mode:
+      output: true
+      analog: false
+      input: false
+      open_drain: false
+      pullup: false
+      pulldown: false
+    inverted: false
+  mosi_pin:
+    number: 14
+    mode:
+      output: true
+      analog: false
+      input: false
+      open_drain: false
+      pullup: false
+      pulldown: false
+    inverted: false
+  force_sw: false
+display:
+- platform: st7920
+  rotation: 270
+  width: 128
+  height: 64
+  cs_pin:
+    number: 16
+    inverted: true
+    mode:
+      output: true
+      analog: false
+      input: false
+      open_drain: false
+      pullup: false
+      pulldown: false
+  auto_clear_enabled: true
+  update_interval: 1ms
+  lambda: !lambda |-
+    it.printf(0, 10, id(sevens), "%.2f", id(usb1v).state);
+    it.printf(30, 10, id(sevens), "%.3f", id(usb1a).state);
+
+    it.printf(0, 22, id(sevens), "%.2f", id(usb2v).state);
+    it.printf(30, 22, id(sevens), "%.3f", id(usb2a).state);
+
+    it.printf(0, 34, id(sevens), "%.2f", id(usb3v).state);
+    it.printf(30, 34, id(sevens), "%.3f", id(usb3a).state);
+
+    it.printf(0, 46, id(sevens), "%.2f", id(usb4v).state);
+    it.printf(30, 46, id(sevens), "%.3f", id(usb4a).state);
+
+
+    it.printf(0, 58, id(sevens), "V%.2f PSU", id(stepdownv).state);
+    it.printf(0, 72, id(powers), "A%.3f", id(stepdowna).state);
+
+    it.printf(0, 98, id(sevens), "%.2f DIAG", id(diagv).state);
+    it.printf(0, 113, id(powers), "A%.3f", id(diaga).state);
+font:
+- file:
+    path: fonts/psua.ttf
+    type: local
+  id: powers
+  size: 20
+- file:
+    path: fonts/SevenSegment.ttf
+    type: local
+  id: sevens
+  size: 16
+light:
+- platform: neopixelbus
+  type: BRG
+  variant: WS2811
+  pin: GPIO2
+  num_leds: 4
+  name: led rgb
+  effects:
+  - strobe:
+      name: Strobe Effect With Custom Values
+      colors:
+      - state: true
+        brightness: 1.0
+        red: 1.0
+        green: 0.9
+        blue: 0.0
+        duration: 500ms
+        color_brightness: 1.0
+        white: 1.0
+        cold_white: 1.0
+        warm_white: 1.0
+      - state: false
+        duration: 250ms
+        brightness: 1.0
+        color_brightness: 1.0
+        red: 1.0
+        green: 1.0
+        blue: 1.0
+        white: 1.0
+        cold_white: 1.0
+        warm_white: 1.0
+      - state: true
+        brightness: 1.0
+        red: 0.0
+        green: 1.0
+        blue: 0.0
+        duration: 500ms
+        color_brightness: 1.0
+        white: 1.0
+        cold_white: 1.0
+        warm_white: 1.0
+  - random:
+      name: My Slow Random Effect
+      transition_length: 30s
+      update_interval: 30s
+  - random:
+      name: My Fast Random Effect
+      transition_length: 4s
+      update_interval: 5s
+  - random:
+      name: Random Effect With Custom Values
+      transition_length: 5s
+      update_interval: 7s
+  - pulse:
+      name: Fast Pulse
+      transition_length: 500ms
+      update_interval: 500ms
+      min_brightness: 0.0
+      max_brightness: 1.0
+  - pulse:
+      name: Slow Pulse
+      update_interval: 2s
+      transition_length: 1s
+      min_brightness: 0.0
+      max_brightness: 1.0
+  - flicker:
+      name: Flicker Effect With Custom Values
+      alpha: 0.95
+      intensity: 0.015
+  - addressable_rainbow:
+      name: Rainbow Effect With Custom Values
+      speed: 10
+      width: 50
+  - addressable_color_wipe:
+      name: Color Wipe Effect With Custom Values
+      colors:
+      - red: 1.0
+        green: 1.0
+        blue: 1.0
+        num_leds: 1
+        white: 1.0
+        random: false
+      - red: 0.0
+        green: 0.0
+        blue: 0.0
+        num_leds: 1
+        white: 1.0
+        random: false
+      add_led_interval: 100ms
+      reverse: false
+  - addressable_scan:
+      name: Scan Effect With Custom Values
+      move_interval: 100ms
+      scan_width: 1
+  - addressable_twinkle:
+      name: Twinkle Effect With Custom Values
+      twinkle_probability: 0.05
+      progress_interval: 4ms
+  - addressable_random_twinkle:
+      name: Random Twinkle Effect With Custom Values
+      twinkle_probability: 0.05
+      progress_interval: 32ms
+  - addressable_fireworks:
+      name: Fireworks Effect With Custom Values
+      update_interval: 32ms
+      spark_probability: 0.1
+      use_random_color: false
+      fade_out_rate: 120
+  disabled_by_default: false
+
+  gamma_correct: 2.8
+  default_transition_length: 1s
+  flash_transition_length: 0s
+  invert: false
+  method:
+    type: bit_bang
+  restore_mode: ALWAYS_ON
+
+
+
